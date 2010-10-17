@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script> 
+	<script src="amodal.js" type="text/javascript"></script> 
+	<link href="amodal.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		$(function() {
+			$('.two,.three').click(function () {
+				$(this).amodal('AWESOME<BR>AWESOME');
+			});
+			$('.one').click(function () {
+				$(this).amodal({message:$(this).html(), maskAll:true, close:'close'});
+			});
+		});
+	</script>
+<style>
+	ul li {
+		background:#EEE;
+		margin:5px;
+		cursor:pointer;
+	}
+</style>
+</head>
+<body>
+
+<div style="margin-left:400px;">
+	<ul class="">
+		<li class="one">one one one one <br />one one one one one one one one one one one one one one one one one one one one </li>
+		<li class="two">two two two two two two two two two two two two two two two two two </li>
+		<li class="three">three three three three three three three three three three three three </li>
+	</ul>
+</div>
+<div style="margin-left:100px;">
+	<ul class="">
+		<li class="one">one one one one one one one one one one one one one one one one one one one one one one one one </li>
+		<li class="two">two two two two two two two two two two two two two two two two two </li>
+		<li class="three">three three three three three three three three three three three three </li>
+	</ul>
+</div>
+<div style="margin-left:200px;">
+	<ul class="">
+		<li class="one">one one one one one one one one one one one one one one one one one one one one one one one one </li>
+		<li class="two">two two two two two two two two two two two two two two two two two </li>
+		<li class="three">three three three three three three three three three three three three </li>
+	</ul>
+</div>
+<div style="margin-left:400px;">
+	<ul class="">
+		<li class="one">one one one one one one one one one one one one one one one one one one one one one one one one </li>
+		<li class="two">two two two two two two two two two two two two two two two two two </li>
+		<li class="three">three three three three three three three three three three three three </li>
+	</ul>
+</div>
+<div style="margin-left:300px;">
+	<ul class="">
+		<li class="one">one one one one one one one one one one one one one one one one one one one one one one one one </li>
+		<li class="two">two two two two two two two two two two two two two two two two two </li>
+		<li class="three">three three three three three three three three three three three three </li>
+	</ul>
+</div>
+
+</body>
+</html>
