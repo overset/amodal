@@ -6,11 +6,17 @@
 	<link href="amodal.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript">
 		$(function() {
-			$('.two,.three').click(function () {
-				$(this).amodal('AWESOME<BR>AWESOME');
-			});
 			$('.one').click(function () {
-				$(this).amodal({message:$(this).html(), maskAll:true, close:'close'});
+				$(this).amodal({message:$(this).html() + $(this).html() + $(this).html(), maskAll:true, close:'close'});
+			});
+			$('.two').click(function () {
+				$(this).amodal('AWESOME<BR>AWESOME<BR>AWESOME<BR>AWESOME<BR>' + $(this).html() + $(this).html() + $(this).html());
+			});
+			$('.three').click(function () {
+				$(this).amodal({message:'AWESOME<BR>AWESOME<BR>AWESOME<BR>AWESOME<BR>' + $(this).html() + $(this).html() + $(this).html(), mask:false});
+			});
+			$('.nestedDiv').click(function () {
+				$(this).amodal({message:'AWESOME<BR>AWESOME<BR>AWESOME<BR>AWESOME<BR>' + $(this).html(), css:{width:($(this).width() - 40)}});
 			});
 		});
 	</script>
@@ -19,6 +25,9 @@
 		background:#EEE;
 		margin:5px;
 		cursor:pointer;
+	}
+	li {
+		padding: 10px;
 	}
 </style>
 </head>
@@ -58,6 +67,51 @@
 		<li class="two">two two two two two two two two two two two two two two two two two </li>
 		<li class="three">three three three three three three three three three three three three </li>
 	</ul>
+</div>
+
+<div style="padding:30px 30px 30px 60px; background:#eee;">
+	<div style="padding:30px 30px 30px 60px; background:#ddd;">
+		<div style="padding:30px 30px 30px 60px; background:#ccc;">
+			<div style="padding:30px 30px 30px 60px; background:#bbb;">
+				<div style="padding:30px 30px 30px 60px; background:#aaa;">
+					<div class="nestedDiv" style="padding:30px 30px 30px 60px; background:#069; color:#fff;">
+					 wow<br>
+					 wow<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="padding:30px 0px 30px 20%; background:#eee; margin-top:-140px;">
+	<div style="padding:30px 0px 30px 20%; background:#ddd;">
+		<div style="padding:30px 0px 30px 20%; background:#ccc;">
+			<div style="padding:30px 0px 30px 20%; background:#bbb;">
+				<div style="padding:30px 0px 30px 20%; background:#aaa;">
+					<div class="nestedDiv" style="padding:30px 30px 30px 60px; background:#069; color:#fff;">
+					 wow<br>
+					 wow<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="padding:30px 20% 30px 0px; background:#eee; margin-top:-140px;">
+	<div style="padding:30px 20% 30px 0px; background:#ddd;">
+		<div style="padding:30px 20% 30px 0px; background:#ccc;">
+			<div style="padding:30px 20% 30px 0px; background:#bbb;">
+				<div style="padding:30px 20% 30px 0px; background:#aaa;">
+					<div class="nestedDiv" style="padding:30px 30px 30px 60px; background:#069; color:#fff;">
+					 wow<br>
+					 wow<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 </body>
