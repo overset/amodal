@@ -5,7 +5,8 @@
 (function ($) {
 	$.fn.amodal = function (options) {
 		var close = function (m) {
-			$(['.amodal','.amodalborder','.amodalmask'].join(m + ',') + m).remove();
+			$(['.amodal','.amodalborder','.amodalmask','.amodalmaskall']
+				.join(m + ',') + m).remove();
 			if (!$('.amodal').length) {
 				$(document).unbind('keydown.amodal')
 				$(window).unbind('resize.amodal');
@@ -22,6 +23,7 @@
 				mask: true,			// mask target area
 				maskAll: false,		// mask entire document
 				windowResize: true,	// resize modal on window.onResize
+				resizeFade: true,	// control the faded border onResize
 				defOpacity: 0.6,	// default mask and border opacity
 				escCancel: true,	// ESC key closes modal
 				zStart: 1300,		// beginning z-index value for modal
@@ -60,15 +62,19 @@
 			};
 		if (opts.windowResize)
 			$(window).unbind('resize.amodal').bind('resize.amodal', function () {
-				$(body).children('.amodalmask')
-					.css({width: $(document.body).width(), height:$(document).height()});
-				if (!$(document).data('amodal.resizeTO'))
-					$(document).data('amodal.resizeTO', setTimeout(function () {
-						$('.amodal').each(function () {
-							reposition.call(this, $(this).data('target'));
-						});
-						$(document).data('amodal.resizeTO', null)
-					}, 5));
+				opts.resizeFade && $('.amodalborder').hide();
+				var ct = $(document).data('amodal.resizeTO');
+				if (ct != null)
+					$(document).data('amodal.resizeTO', clearTimeout(ct));
+				$(document.body).children('.amodalmaskall')
+					.css({width:$(window).width(), height:$(window).height()});
+				$(document).data('amodal.resizeTO', setTimeout(function () {
+					$('.amodal').each(function () {
+						reposition.call(this, $(this).data('target'));
+					});
+					opts.resizeFade && $('.amodalborder').fadeIn(100);
+					$(document).data('amodal.resizeTO', null);
+				}, 5));
 			});
 		if (opts.escCancel)
 			$(document).unbind('keydown.amodal').bind('keydown.amodal', function (e) {
@@ -76,15 +82,15 @@
 					close($('.amodal').length);
 			});
 		return this.each(function () {
-			var target = $(this).length ? $(this) : $(body),
+			var target = $(this).length ? $(this) : $(document.body),
 				z = opts.zStart + (mIndex * 3) + 300,
 				m = ++mIndex,
 				maskCSS = {opacity: opts.defOpacity, zIndex: opts.zStart};
 			if (opts.maskAll)
-				body.append(divMarkup('amodalmask', m))
-					.find('.amodalmask' + m).css(maskCSS).css({
-						top: 0, left: $(document.body).offset().left,
-						width: $(document.body).width(), height:$(document).height()
+				body.append(divMarkup('amodalmaskall', m))
+					.find('.amodalmaskall' + m).css(maskCSS).css({
+						top: 0, left:0,
+						width: $(window).width(), height:$(window).height()
 					}).end()
 			target.before(divMarkup('amodal', m) + divMarkup('amodalborder', m) +
 					(opts.mask && !opts.maskAll ? divMarkup('amodalmask', m) : ''))
@@ -99,7 +105,8 @@
 						reposition.call(this, target, m);
 					})
 				.end()
-				.siblings('.amodalborder' + m).css({opacity: opts.defOpacity, zIndex:z--}).end()
+				.siblings('.amodalborder' + m)
+					.css({opacity: opts.defOpacity, zIndex:z--}).end()
 				.siblings('.amodalmask' + m).css(maskCSS);
 		});
 	};

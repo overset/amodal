@@ -1,5 +1,5 @@
-.amodalmask {
-	position:absolute;
+.amodalmask,.amodalmaskall {
+	position:fixed;
 	background:#FFF;
 }
 .amodal,.amodalborder {
