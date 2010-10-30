@@ -39,12 +39,12 @@
 					amodal = target.siblings('.amodal' + selSuffix);
 				amodal.css({
 						top: Math.max(opts.borderPad,
-							target.offset().top + 
+							target.position().top + 
 								(target.outerHeight(1) / 2) - 
 								($(this).outerHeight(1) / 2)),
 						left: Math.max(opts.borderPad, Math.min(
 							$(window).width() - $(this).outerWidth(1) - opts.borderPad,
-							target.offset().left + 
+							target.position().left + 
 								(target.outerWidth(1) - $(this).outerWidth(1)) / 2))
 					}).end()
 					.siblings('.amodalborder' + selSuffix).css({
@@ -53,15 +53,15 @@
 						height: amodal.height(),
 						width: amodal.width()
 					}).end()
-					.siblings('.amodalmask' + selSuffix).css($.extend(target.offset(), {
+					.siblings('.amodalmask' + selSuffix).css(target.position()).css({
 						width: target.outerWidth(1),
 						height: target.outerHeight(1)
-					}));
+					});
 			};
 		if (opts.windowResize)
 			$(window).unbind('resize.amodal').bind('resize.amodal', function () {
 				$(body).children('.amodalmask')
-					.css({width: $(window).width(), height:$(document).height()});
+					.css({width: $(document.body).width(), height:$(document).height()});
 				if (!$(document).data('amodal.resizeTO'))
 					$(document).data('amodal.resizeTO', setTimeout(function () {
 						$('.amodal').each(function () {
@@ -83,7 +83,8 @@
 			if (opts.maskAll)
 				body.append(divMarkup('amodalmask', m))
 					.find('.amodalmask' + m).css(maskCSS).css({
-						width: $(window).width(), height:$(document).height()
+						top: 0, left: $(document.body).offset().left,
+						width: $(document.body).width(), height:$(document).height()
 					}).end()
 			target.before(divMarkup('amodal', m) + divMarkup('amodalborder', m) +
 					(opts.mask && !opts.maskAll ? divMarkup('amodalmask', m) : ''))
