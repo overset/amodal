@@ -14,7 +14,7 @@
 		};
 		// if no options arg passed - destroy newest amodal (FILO)
 		if (typeof options == 'undefined') {
-			var amodal = this.siblings('.amodal')[0] || {},
+			var amodal = this.prevAll('.amodal:first')[0] || {},
 				ami = (amodal.className || '').replace(/[^0-9]/g, '');
 			ami && close(ami);
 			return this;
@@ -38,7 +38,7 @@
 			},
 			reposition = function (target, m) {
 				var selSuffix = typeof m != 'undefined' ? m : '',
-					amodal = target.siblings('.amodal' + selSuffix);
+					amodal = target.prevAll('.amodal' + selSuffix + ':first');
 				amodal.css({
 						top: Math.max(opts.borderPad,
 							target.position().top + 
@@ -48,14 +48,14 @@
 							$(window).width() - $(this).outerWidth(1) - opts.borderPad,
 							target.position().left + 
 								(target.outerWidth(1) - $(this).outerWidth(1)) / 2))
-					}).end()
-					.siblings('.amodalborder' + selSuffix).css({
+					})
+					.next('.amodalborder' + selSuffix).css({
 						left: (parseInt(amodal.css('left')) || 0 ) - opts.borderPad,
 						top: (parseInt(amodal.css('top')) || 0 ) - opts.borderPad,
 						height: amodal.height(),
 						width: amodal.width()
-					}).end()
-					.siblings('.amodalmask' + selSuffix).css(target.position()).css({
+					})
+					.next('.amodalmask' + selSuffix).css(target.position()).css({
 						width: target.outerWidth(1),
 						height: target.outerHeight(1)
 					});
@@ -92,9 +92,10 @@
 						top: 0, left:0,
 						width: $(window).width(), height:$(window).height()
 					}).end()
-			target.before(divMarkup('amodal', m) + divMarkup('amodalborder', m) +
-					(opts.mask && !opts.maskAll ? divMarkup('amodalmask', m) : ''))
-				.siblings('.amodal' + m)
+			target.before(divMarkup('amodal', m))
+				.before(divMarkup('amodalborder', m))
+				.before(opts.mask && !opts.maskAll ? divMarkup('amodalmask', m) : '')
+				.prevAll('.amodal' + m + ':first')
 					.html((opts.close ? divMarkup('amodalclose', m, opts.close) : '') + message)
 					.css(opts.css || {}).css({display:'block', zIndex:z--})
 					.data('target', target)
@@ -104,10 +105,9 @@
 					.each(function () {
 						reposition.call(this, target, m);
 					})
-				.end()
-				.siblings('.amodalborder' + m)
-					.css({opacity: opts.defOpacity, zIndex:z--}).end()
-				.siblings('.amodalmask' + m).css(maskCSS);
+				.next('.amodalborder' + m)
+					.css({opacity: opts.defOpacity, zIndex:z--})
+				.next('.amodalmask' + m).css(maskCSS);
 		});
 	};
 })(jQuery);
