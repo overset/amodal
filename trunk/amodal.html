@@ -18,6 +18,9 @@
 			$('.nestedDiv').click(function () {
 				$(this).amodal({message:'AWESOME<BR>AWESOME<BR>AWESOME<BR>AWESOME<BR>' + $(this).html(), css:{width:($(this).width() - 40)}});
 			});
+			$('.button').click(function () {
+				$(this).parent().amodal('AWESOME<BR>AWESOME<BR>AWESOME<BR>AWESOME<BR>');
+			});
 		});
 	</script>
 <style>
@@ -32,6 +35,11 @@
 </style>
 </head>
 <body>
+
+<div style="width:960px; margin:0 auto auto; background:#ddd; text-align:center; min-height:300px;">
+	<h1>centered column - width 960</h1>
+	<div class="button" style="margin:20px; width:200px; background:#ccc; border:1px solid #888; cursor:pointer;">click me for modal to target parent div</div>
+</div>
 
 <div style="margin-left:400px;">
 	<ul class="">
