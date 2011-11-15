@@ -98,6 +98,9 @@
                 z = opts.zStart + (mIndex * 3) + 300,
                 m = ++mIndex,
                 maskCSS = {opacity: opts.defOpacity, zIndex: opts.zStart};
+                close = (opts.close ?
+                         divMarkup('amodalclose', m,
+                                    opts.close.length ? opts.close : '&nbsp;') : '')
             if (opts.maskAll)
                 body.append(divMarkup('amodalmaskall', m))
                     .find('.amodalmaskall' + m).css(maskCSS).css({
@@ -108,7 +111,7 @@
                 .before(divMarkup('amodalborder', m))
                 .before(opts.mask && !opts.maskAll ? divMarkup('amodalmask', m) : '')
                 .prevAll('.amodal' + m + ':first')
-                    .html((opts.close ? divMarkup('amodalclose', m, opts.close) : '') + message)
+                    .html(close + message)
                     .css(opts.css || {}).css({display:'block', zIndex:z--})
                     .data('target', target)
                     .find('.amodalclose').click(function () {
